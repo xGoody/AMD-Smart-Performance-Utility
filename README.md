@@ -1,4 +1,4 @@
-# AMD-Smart-Performance-Utility
+# AMD Smart Performance Utility
 A utility to tune power levels of your zen processor.  Navigate with down and up arrows; Hit enter to select things.
 
 
