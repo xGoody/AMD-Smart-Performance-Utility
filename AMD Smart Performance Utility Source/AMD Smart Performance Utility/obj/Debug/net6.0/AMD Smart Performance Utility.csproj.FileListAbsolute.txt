@@ -1,0 +1,15 @@
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\bin\Debug\net6.0\AMD Smart Performance Utility.exe
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\bin\Debug\net6.0\AMD Smart Performance Utility.deps.json
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\bin\Debug\net6.0\AMD Smart Performance Utility.runtimeconfig.json
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\bin\Debug\net6.0\AMD Smart Performance Utility.dll
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\bin\Debug\net6.0\ref\AMD Smart Performance Utility.dll
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\bin\Debug\net6.0\AMD Smart Performance Utility.pdb
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.csproj.AssemblyReference.cache
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.AssemblyInfoInputs.cache
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.AssemblyInfo.cs
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.csproj.CoreCompileInputs.cache
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.dll
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\ref\AMD Smart Performance Utility.dll
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.pdb
+C:\Users\ibrad\source\repos\AMD Smart Performance Utility\AMD Smart Performance Utility\obj\Debug\net6.0\AMD Smart Performance Utility.genruntimeconfig.cache
