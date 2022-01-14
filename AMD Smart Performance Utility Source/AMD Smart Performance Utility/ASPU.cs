@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace AMD_Smart_Performance_Utility
 {
     class ASPU
     {
+        String TempLimit = "";
+        String SkinTemp = "";
+        String TDP = "";
+        String SlowBoost = "";
+        String FastBoost = "";
+        String SlowBoostDuration = "";
+        String FastBoostDuration = "";
         bool devMode = false;
         public void Start()
         {
@@ -16,7 +22,7 @@ namespace AMD_Smart_Performance_Utility
             RunMainMenu();
         }
 
-        private void RunMainMenu()
+        void RunMainMenu()
         {
             string prompt = @"
   █████╗ ███████╗██████╗ ██╗   ██╗
@@ -69,7 +75,7 @@ namespace AMD_Smart_Performance_Utility
         {
 
             string prompt = "Advanced Options\n\n";
-            string[] options = { "Back\n\n", "Power Options", "Developer Options" };
+            string[] options = { "Back\n\n", "Power Options", "Developer Options", "Install Required Service" };
             Menu AdvancedMenu = new Menu(prompt, options);
             int selectedIndex = AdvancedMenu.Run();
             switch (selectedIndex)
@@ -83,15 +89,20 @@ namespace AMD_Smart_Performance_Utility
                 case 2:
                     Developer();
                     break;
+                case 3:
+                    Proc.InstallService(devMode);
+                    Advanced();
+                    break;
+                
             }
 
         }
         private void NoiseProfiles()
         {
-            string QuietMode = "--tctl-temp=50";
-            string BalancedMode = "--tctl-temp=70";
-            string LoudMode = "--tctl-temp=85";
-            string VeryLoudMode = "--tctl-temp=95";
+            String QuietMode = "--tctl-temp=50";
+            String BalancedMode = "--tctl-temp=70";
+            String LoudMode = "--tctl-temp=85";
+            String VeryLoudMode = "--tctl-temp=95";
             string prompt = "Noise Profiles\n\n";
             string[] options = { "Back\t Temp Limits\n", "Quiet \t 50c", "Balanced\t 70c", "Loud \t 85c", "Extreme\t 95c" };
             Menu ProfileMenu = new Menu(prompt, options);
@@ -104,25 +115,21 @@ namespace AMD_Smart_Performance_Utility
 
                 case 1:
                     Proc.RyzenADJ(QuietMode, devMode);
-                    Console.WriteLine("Quiet Mode is now Set!\n");
                     Console.ReadKey();
                     NoiseProfiles();
                     break;
                 case 2:
                     Proc.RyzenADJ(BalancedMode, devMode);
-                    Console.WriteLine("Balanced Mode is now Set!\n");
                     Console.ReadKey();
                     NoiseProfiles();
                     break;
                 case 3:
                     Proc.RyzenADJ(LoudMode, devMode);
-                    Console.WriteLine("Loud Mode is now Set!\n");
                     Console.ReadKey();
                     NoiseProfiles();
                     break;
                 case 4:
                     Proc.RyzenADJ(VeryLoudMode, devMode);
-                    Console.WriteLine("Very Loud Mode is now Set!\n");
                     Console.ReadKey();
                     NoiseProfiles();
                     break;
@@ -132,9 +139,9 @@ namespace AMD_Smart_Performance_Utility
         }
         private void PowerConfig()
         {
-
+            String Args;
             string prompt = "PowerConfig\n\n\n\n";
-            string[] options = { "Back\n", "Temp Limit", "Skin Temp Limit\n", "TDP/STAPM", "Slow Boost", "Fast Boost\n", "Slow Boost Duration", "Fast Boost Duration" };
+            string[] options = { "Back\n", "Temp Limit", "Skin Temp Limit\n", "TDP/STAPM", "Slow Boost", "Fast Boost\n", "Slow Boost Duration", "Fast Boost Duration\n", "Set Changes" };
             Menu PowerConfigMenu = new Menu(prompt, options);
             int selectedIndex = PowerConfigMenu.Run();
             switch (selectedIndex)
@@ -143,25 +150,132 @@ namespace AMD_Smart_Performance_Utility
                     RunMainMenu();
                     break;
                 case 1:
-                    tempPowerConfig();
+                    temp2();
+                    if (int.TryParse(Console.ReadLine(), out int Input1) && Input1 <= 100 && Input1 >= 30)
+                    {
+
+                        TempLimit = $"{ " --tctl-temp="+ (Input1)}";
+                        Console.WriteLine($"{TempLimit + " In (celcius)"}");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't give me a valid number.");
+                        Console.WriteLine("Or you exceeded 100c TempLimit which is too dangerous");
+                        Console.WriteLine("You can only use values from 30 to 100 (celcius)");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
                     break;
                 case 2:
-                    tempPowerConfig();
+                    temp2();
+                    if (int.TryParse(Console.ReadLine(), out int Input2) && Input2 <= 105 && Input2 >= 35)
+                    {
+                        SkinTemp = $"{ " --apu-skin-temp="+ (Input2)}";
+                        Console.WriteLine($"{SkinTemp + " In (celcius)"}");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't give me a valid number.");
+                        Console.WriteLine("Or you exceeded 105c SkinTempLimit which is too dangerous.");
+                        Console.WriteLine("You can only use values from 35 to 105 (celcius)");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
                     break;
                 case 3:
-                    tempPowerConfig();
+                    temp2();
+                    if (int.TryParse(Console.ReadLine(), out int Input3) && Input3 <= 300 && Input3 >= 0)
+                    {
+                        TDP = $"{ " --stapm-limit="+ (Input3*1000)}";
+                        Console.WriteLine($"{TDP + " In (miliWatts)"}");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't give me a valid number.");
+                        Console.WriteLine("You can only use values from 0 to 300 (celcius)");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
                     break;
                 case 4:
-                    tempPowerConfig();
+                    temp2();
+                    if (int.TryParse(Console.ReadLine(), out int Input4) && Input4 <= 300 && Input4 >= 0)
+                    {
+                        SlowBoost = $"{ " --slow-limit="+ (Input4 * 1000)}";
+                        Console.WriteLine($"{SlowBoost + " In (miliWatts)"}");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't give me a valid number.");
+                        Console.WriteLine("You can only use values from 0 to 300 (watts)");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
                     break;
                 case 5:
-                    tempPowerConfig();
+                    temp2();
+                    if (int.TryParse(Console.ReadLine(), out int Input5) && Input5 <= 300 && Input5 >= 0)
+                    {
+                        FastBoost = $"{ " --fast-limit="+ (Input5 * 1000)}";
+                        Console.WriteLine($"{FastBoost + " In (miliWatts)"}");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't give me a valid number.");
+                        Console.WriteLine("You can only use values from 0 to 300 (watts)");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
                     break;
                 case 6:
-                    tempPowerConfig();
+                    temp2();
+                    if (int.TryParse(Console.ReadLine(), out int Input6) && Input6 <= 1024 && Input6 >= 0)
+                    {
+                        SlowBoostDuration = $"{ " --slow-time="+ (Input6)}";
+                        Console.WriteLine($"{SlowBoostDuration + " In (seconds)"}");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't give me a valid number.");
+                        Console.WriteLine("You can only use values from 0 to 1024 (seconds)");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
                     break;
                 case 7:
-                    tempPowerConfig();
+                    temp2();
+                    if (int.TryParse(Console.ReadLine(), out int Input7) && Input7 <= 3600 && Input7 >= 0)
+                    {
+                        FastBoostDuration = $"{ " --stapm-time=" + (Input7)}";
+                        Console.WriteLine($"{FastBoostDuration + " In (seconds)"}");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't give me a valid number.");
+                        Console.WriteLine("You can only use values from 0 to 3600 (seconds)");
+                        Console.ReadKey();
+                        PowerConfig();
+                    }
+                    break;
+                case 8:
+                    Args = TempLimit + SkinTemp + TDP + SlowBoost + FastBoost + SlowBoostDuration + FastBoostDuration;
+                    Proc.RyzenADJ(Args, devMode);
+                    Console.ReadKey();
+                    PowerConfig();
                     break;
             }
 
@@ -169,7 +283,7 @@ namespace AMD_Smart_Performance_Utility
         private void Credits()
         {
 
-            string prompt = "Credits\n\n\n\nASPU was made by xGoody using FlyGoat's ryzen adj.\n";
+            string prompt = "Credits\n\n\n\nASPU was made by xGoody using FlyGoat's ryzenadj.\n";
             string[] options = { "Back\n\n" };
             Menu CreditMenu = new Menu(prompt, options);
             int selectedIndex = CreditMenu.Run();
@@ -226,12 +340,17 @@ namespace AMD_Smart_Performance_Utility
             }
 
         }
-        private void tempPowerConfig()
+        private void temp()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n\nSorry this doesnt work yet.");
             Console.ReadKey();
             PowerConfig();
+        }
+
+        private void temp2()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
         }
     }
 }

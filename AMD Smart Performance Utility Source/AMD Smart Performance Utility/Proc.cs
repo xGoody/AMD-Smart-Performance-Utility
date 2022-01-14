@@ -27,9 +27,26 @@ namespace AMD_Smart_Performance_Utility
 
             string output = process.StandardOutput.ReadToEnd();
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"\n{output}");
+            Console.WriteLine($"\n {output}");
             process.WaitForExit();
 
         }
+
+        public static void InstallService(bool dev)
+        {
+            Process process2 = new Process();
+            if (dev == true)
+            {
+                process2.StartInfo.FileName = "../../../ryzenadj/installServiceTask.bat";
+            }
+            else
+            {
+                process2.StartInfo.FileName = "ryzenadj/ryzenadj.installServiceTask.bat";
+            }
+            process2.StartInfo.Verb = "runas";
+            process2.Start();
+            process2.WaitForExit();
+        }
+
     }
 }

@@ -10,6 +10,7 @@ namespace AMD_Smart_Performance_Utility
     {
         static void Main(string[] args)
         {
+            SetWindowSize(64, 20);
             ASPU Utility = new ASPU();
             Utility.Start();
         }
