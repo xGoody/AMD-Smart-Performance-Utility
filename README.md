@@ -4,7 +4,7 @@ A utility to tune power levels of your zen processor.  Navigate with down and up
 Program Use:
 This program is for tuning your zen processor.
 
-Agreement:
+Terms:
 I am not liable if you damage anything.
 
 Controls:
